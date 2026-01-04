@@ -35,6 +35,9 @@ RUN \
     && (find /patches -iname *.diff -print0 | sort -z | xargs -0 -r -n 1 patch -p2 -i) \
     && source /opt/nvm/nvm.sh \
     && make clean \
+    # This is a workaround to allow building opengist with the latest version of \
+    # Node.js. \
+    && npm install --package-lock-only \
     # Build opengist. \
     && CGO_ENABLED=0 GOOS=linux make \
     && popd \
